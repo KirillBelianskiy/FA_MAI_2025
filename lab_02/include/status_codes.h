@@ -1,0 +1,12 @@
+#pragma once
+
+enum status_codes
+{
+    OK,
+    ERROR_MEMORY_ALLOCATION,
+    SIZE_NOT_FOUND,
+    ERROR_NOT_FOUND,
+    INCORRECT_ARGUMENT,
+    LARGE_NUMBER,
+    INCORRECT_NUMBER,
+};
