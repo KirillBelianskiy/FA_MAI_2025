@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
 #include "../include/functions.h"
 #include "../include/status_codes.h"
 

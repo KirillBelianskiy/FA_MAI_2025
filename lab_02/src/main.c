@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <limits.h>
-#include <stdlib.h>
 
 #include "../include/functions.h"
 #include "../include/status_codes.h"
@@ -8,7 +6,11 @@
 int main()
 {
     int n;
-    scanf("%d", &n);
+    if (scanf("%d", &n) == 0)
+    {
+        printf("Error reading input\n");
+        return INCORRECT_NUMBER;
+    }
 
     if (n <= 0 || n > 100000)
     {
@@ -17,20 +19,23 @@ int main()
     }
 
     d_array input;
-    create_d_array(&input, 10);
-    if (input.numbers == NULL)
+    if (create_d_array(&input, 10))
     {
         printf("Error memory allocation\n");
         return ERROR_MEMORY_ALLOCATION;
     }
 
-    unsigned x;
+    int x;
     for (int i = 0; i < n; i++)
     {
-        scanf("%u", &x);
-        if (x == 0)
+        if (scanf("%d", &x) != 1)
         {
-            printf("Zero is not a correct number\n");
+            printf("Invalid input\n");
+            return ERROR_NOT_FOUND;
+        }
+        if (x <= 0 || x > 100000)
+        {
+            printf("This is an incorrect number\n");
             return INCORRECT_NUMBER;
         }
 
