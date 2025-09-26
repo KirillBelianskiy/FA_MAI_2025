@@ -58,17 +58,22 @@ int to_dec(const char* num, const int base)
 
 int read_file(FILE* file, char buffer[][20])
 {
-    int i = 0, j = 0, reading = 0;
+    int i = 0, j = 0, reading = 0, insignificant_zeros = 0;
     char ch;
     while ((ch = fgetc(file)) != EOF && i < BUFFER_SIZE)
     {
         if (isalnum(ch))
         {
+            if (ch == '0' && !reading && j == 0)
+            {
+                continue;
+            }
             if (j < STR_SIZE - 1)
             {
                 buffer[i][j] = ch;
                 j++;
                 reading = 1;
+                insignificant_zeros = 0;
             }
             else
             {
