@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "../include/functions.h"
 #include "../include/status_codes.h"
@@ -168,26 +169,31 @@ int GetOpts(int argc, char** argv, kOpts *option, int *number) {
     default: return UNKNOW_FLAG;
     }
 
-    *number = atoi(argv[2]);
+    char *endptr;
+    long val;
+    val = strtol(argv[2], &endptr, 10);
+
+    if (endptr == argv[2] || *endptr != '\0')
+    {
+        return INCORRECT_ARGUMENT;
+    }
+
+    if (val < INT_MIN || val > INT_MAX)
+    {
+        return LARGE_NUMBER;
+    }
+
+    *number = (int)val;
     return OK;
 }
 
 void print_errors(int error_code)
 {
     switch (error_code) {
-    case OK:
-        break;
-    case NEGATIVE_NUMBER:
-        printf("Negative number");
-        break;
-    case LARGE_NUMBER:
-        printf("Large number");
-        break;
-    case INCORRECT_ARGUMENT:
-        printf("Incorrect number");
-        break;
-    default:
-        printf("Unknown status");
-        break;
+    case OK: break;
+    case NEGATIVE_NUMBER: printf("Negative number"); break;
+    case LARGE_NUMBER: printf("Large number"); break;
+    case INCORRECT_ARGUMENT: printf("Incorrect number"); break;
+    default: printf("Unknown status"); break;
     }
 }
