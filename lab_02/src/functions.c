@@ -13,7 +13,7 @@ unsigned upper_bound(unsigned n) {
     return (unsigned)ceil((double)n * (ln_n + ln_ln_n) * 1.2);
 }
 
-int create_d_array(d_array* d_array, int start_capacity)
+int create_d_array(d_array* d_array, const int start_capacity)
 {
     if (d_array == NULL || start_capacity <= 0) return ERROR_NOT_FOUND;
 
@@ -26,13 +26,13 @@ int create_d_array(d_array* d_array, int start_capacity)
     return OK;
 }
 
-int get_size(d_array* d_array)
+int get_size(const d_array* d_array)
 {
     if (d_array == NULL) return SIZE_NOT_FOUND;
     return d_array->size;
 }
 
-int push_back(d_array* d_array, unsigned value)
+int push_back(d_array* d_array, const unsigned value)
 {
     if (d_array == NULL) return ERROR_NOT_FOUND;
 
@@ -51,7 +51,7 @@ int push_back(d_array* d_array, unsigned value)
     return OK;
 }
 
-unsigned max(d_array* d_array)
+unsigned max(const d_array* d_array)
 {
     if (d_array == NULL || d_array->size == 0) return 0;
 
@@ -76,7 +76,7 @@ int free_d_array(d_array* d_array)
     return OK;
 }
 
-int _sieve(unsigned n, d_array* primes)
+int _sieve(const unsigned n, const d_array* primes)
 {
     if (primes == NULL || n < 2) return ERROR_NOT_FOUND;
 
@@ -110,7 +110,7 @@ int _sieve(unsigned n, d_array* primes)
     return OK;
 }
 
-int sieve(d_array* input)
+int sieve(const d_array* input)
 {
     if (input == NULL || input->size == 0) return ERROR_NOT_FOUND;
 
@@ -147,7 +147,7 @@ int sieve(d_array* input)
         if (k == 0 || k > (unsigned)primes.size) {
             printf("Invalid ordinal: %u\n", k);
         } else {
-            printf("%u ", primes.numbers[k - 1]);
+            printf("%u\n", primes.numbers[k - 1]);
         }
     }
     printf("\n");

@@ -7,7 +7,7 @@
 #include "../include/functions.h"
 #include "../include/status_codes.h"
 
-int find_natural_numbers(int x)
+int find_natural_numbers(const int x)
 {
     if (x <= 0)
     {
@@ -27,7 +27,7 @@ int find_natural_numbers(int x)
     return OK;
 }
 
-int is_prime(int x)
+int is_prime(const int x)
 {
     if (x < 0)
     {
@@ -36,7 +36,7 @@ int is_prime(int x)
 
     if (x == 1 || x == 0)
     {
-        return INCORRECT_ARGUMENT;
+        return INCORRECT_ARGUMENTS;
     }
 
     int limit = (int)sqrt(x);
@@ -52,7 +52,7 @@ int is_prime(int x)
     return OK;
 }
 
-int to_hex(int x)
+int to_hex(const int x)
 {
     if (x == 0)
     {
@@ -66,12 +66,13 @@ int to_hex(int x)
 
     char digits[8];
     int len = 0;
+    int value = x;
 
-    while (x > 0 && len < (int)sizeof(digits))
+    while (value > 0 && len < (int)sizeof(digits))
     {
-        int d = x % 16;
+        int d = value % 16;
         digits[len++] = (char)((d < 10) ? ('0' + d) : ('A' + (d - 10)));
-        x /= 16;
+        value /= 16;
     }
 
     for (int i = len - 1; i >= 0; --i)
@@ -81,7 +82,7 @@ int to_hex(int x)
     return OK;
 }
 
-int table_of_degrees(int x)
+int table_of_degrees(const int x)
 {
     if (x < 1)
     {
@@ -105,7 +106,7 @@ int table_of_degrees(int x)
     return OK;
 }
 
-int sum_to_num(int x)
+int sum_to_num(const int x)
 {
     if (x < 1)
     {
@@ -121,13 +122,13 @@ int sum_to_num(int x)
     return OK;
 }
 
-static int _factorial(int x)
+static int _factorial(const int x)
 {
     if (x == 0 || x == 1)  return 1;
     return x * _factorial(x - 1);
 }
 
-int factorial(int x)
+int factorial(const int x)
 {
     if (x < 0)
     {
@@ -144,18 +145,18 @@ int factorial(int x)
     return OK;
 }
 
-int GetOpts(int argc, char** argv, kOpts *option, int *number) {
+int GetOpts(const int argc, char* const* argv, kOpts *option, int *number) {
     if (argc != 3) {
         return INCORRECT_COUNT_INPUT;
     }
 
-    char* opt_str = argv[1];
+    const char* opt_str = argv[1];
     if (opt_str[0] != '-' && opt_str[0] != '/') {
-        return INCORRECT_ARGUMENT;
+        return INCORRECT_ARGUMENTS;
     }
 
     if (strlen(opt_str) != 2) {
-        return INCORRECT_ARGUMENT;
+        return INCORRECT_ARGUMENTS;
     }
 
     char flag = opt_str[1];
@@ -175,7 +176,7 @@ int GetOpts(int argc, char** argv, kOpts *option, int *number) {
 
     if (endptr == argv[2] || *endptr != '\0')
     {
-        return INCORRECT_ARGUMENT;
+        return INCORRECT_ARGUMENTS;
     }
 
     if (val < INT_MIN || val > INT_MAX)
@@ -187,13 +188,13 @@ int GetOpts(int argc, char** argv, kOpts *option, int *number) {
     return OK;
 }
 
-void print_errors(int error_code)
+void print_errors(const int error_code)
 {
     switch (error_code) {
     case OK: break;
     case NEGATIVE_NUMBER: printf("Negative number"); break;
     case LARGE_NUMBER: printf("Large number"); break;
-    case INCORRECT_ARGUMENT: printf("Incorrect number"); break;
+    case INCORRECT_ARGUMENTS: printf("Incorrect number"); break;
     default: printf("Unknown status"); break;
     }
 }

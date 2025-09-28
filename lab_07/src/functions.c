@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "../include/status_codes.h"
 
 #define BUFFER_SIZE 1024
@@ -98,7 +99,7 @@ int read_file(FILE* file, char buffer[][20])
 
 int write_file(FILE* file, const char buffer[][20], const int* bases, const int* dec_numbers, const int size)
 {
-    if (size <= 0) return INCORRECT_ARGUMENT;
+    if (size <= 0) return INCORRECT_ARGUMENTS;
     for (int i = 0; i < size; i++)
     {
        fprintf(file, "%s %d %d\n", buffer[i], bases[i], dec_numbers[i]);

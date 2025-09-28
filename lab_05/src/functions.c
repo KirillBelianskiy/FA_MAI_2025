@@ -71,7 +71,7 @@ int change_to_ascii(FILE *inp, FILE *outp)
     return OK;
 }
 
-int GetOpts(int argc, char **argv, kOpts *option, FILE **input, FILE **output)
+int GetOpts(int argc, const char **argv, kOpts *option, FILE **input, FILE **output)
 {
     if (argc < 3 || argc > 4)
     {
@@ -141,16 +141,16 @@ int GetOpts(int argc, char **argv, kOpts *option, FILE **input, FILE **output)
     return OK;
 }
 
-void print_errors(int error_code)
+void print_errors(const int error_code)
 {
     switch (error_code)
     {
     case OK: break;
-    case ERROR_OPEN_FILE: printf("Ошибка: невозможно открыть файл\n"); break;
-    case ERROR_MEMORY_ALLOCATION: printf("Ошибка: сбой выделения памяти\n"); break;
-    case INCORRECT_COUNT_INPUT: printf("Ошибка: неверное количество аргументов\n"); break;
-    case INCORRECT_INPUT: printf("Ошибка: некорректный ввод\n"); break;
-    case UNKNOWN_FLAG: printf("Ошибка: неизвестный флаг\n"); break;
-    default: printf("Ошибка: неизвестная ошибка\n"); break;
+    case ERROR_OPEN_FILE: printf("The file cannot be opened\n"); break;
+    case ERROR_MEMORY_ALLOCATION: printf("Memory allocation failure\n"); break;
+    case INCORRECT_COUNT_INPUT: printf("Incorrect number of arguments\n"); break;
+    case INCORRECT_INPUT: printf("Incorrect input\n"); break;
+    case UNKNOWN_FLAG: printf("A unknown flag\n"); break;
+    default: printf("A unknown error\n"); break;
     }
 }
