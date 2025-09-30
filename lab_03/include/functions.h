@@ -1,7 +1,4 @@
 #pragma once
-#include "../include/status_codes.h"
-
-typedef int (*callback_t)(int);
 
 int parse_input(const int argc, const char** argv, double* nums, char* f);
 
