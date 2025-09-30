@@ -1,0 +1,14 @@
+#pragma once
+
+enum status_codes
+{
+    OK,
+    NEGATIVE_NUMBER,
+    INCORRECT_INPUT,
+    INCORRECT_COUNT_INPUT,
+    INFINITY_SOL,
+    ZERO_SOL,
+    INCORRECT_ARGUMENTS,
+    MULTIPLE,
+    NOT_MULTIPLE,
+};
