@@ -68,7 +68,25 @@ int parse_input(const int argc, const char** argv, double* nums, char* f)
 
     for (int i = 2; i < argc; i++)
     {
-        nums[i - 2] = atof(argv[i]);
+        char *endptr;
+        double value = strtod(argv[i], &endptr);
+
+        if (*endptr != '\0' || argv[i] == endptr)
+        {
+            return 1;
+        }
+
+        if (value == HUGE_VAL || value == -HUGE_VAL)
+        {
+            return 1;
+        }
+
+        if (eq(10e-10, value, 0.0) || less(10e-10, value, 0.0))
+        {
+            return 1;
+        }
+
+        nums[i-2] = value;
     }
     return OK;
 }
