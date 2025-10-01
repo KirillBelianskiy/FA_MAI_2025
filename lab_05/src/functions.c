@@ -149,7 +149,7 @@ void print_errors(const int error_code)
     case ERROR_OPEN_FILE: printf("The file cannot be opened\n"); break;
     case ERROR_MEMORY_ALLOCATION: printf("Memory allocation failure\n"); break;
     case INCORRECT_COUNT_INPUT: printf("Incorrect number of arguments\n"); break;
-    case INCORRECT_INPUT: printf("Incorrect input\n"); break;
+    case INCORRECT_INPUT: printf("Incorrect include\n"); break;
     case UNKNOWN_FLAG: printf("A unknown flag\n"); break;
     default: printf("A unknown error\n"); break;
     }

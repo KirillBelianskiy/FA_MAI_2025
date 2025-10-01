@@ -108,7 +108,6 @@ void print_errors(const int err)
         case INCORRECT_BASE: printf("Incorrect base"); break;
         case LARGE_NUMBER: printf("Large number"); break;
         case INCORRECT_COUNT_INPUT: printf("Incorrect count of arguments"); break;
-        case INCORRECT_NUMBER: printf("Incorrect number"); break;
         default: printf("Unknown status"); break;
     }
 }

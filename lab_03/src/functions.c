@@ -222,7 +222,7 @@ int is_triangular(const double eps, const double a, const double b, const double
     return OK;
 }
 
-void print_messanges(const int err)
+void print_errors(const int err)
 {
     switch (err)
     {

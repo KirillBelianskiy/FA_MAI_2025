@@ -167,7 +167,6 @@ int GetOpts(const int argc, char* const* argv, kOpts *option, int *number) {
     case 'e': *option = OPT_E; break;
     case 'a': *option = OPT_A; break;
     case 'f': *option = OPT_F; break;
-    default: return UNKNOW_FLAG;
     }
 
     char *endptr;

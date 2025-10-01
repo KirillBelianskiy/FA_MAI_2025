@@ -8,5 +8,4 @@ enum status_codes
     ERROR_NOT_FOUND,
     INCORRECT_ARGUMENTS,
     LARGE_NUMBER,
-    INCORRECT_NUMBER,
 };

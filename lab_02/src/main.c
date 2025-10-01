@@ -8,13 +8,13 @@ int main()
     int n;
     if (scanf("%d", &n) == 0)
     {
-        printf("Error reading input\n");
-        return INCORRECT_NUMBER;
+        printf("Error reading include\n");
+        return INCORRECT_ARGUMENTS;
     }
 
     if (n <= 0 || n > 100000)
     {
-        printf("Invalid input\n");
+        printf("Invalid include\n");
         return SIZE_NOT_FOUND;
     }
 
@@ -30,13 +30,13 @@ int main()
     {
         if (scanf("%d", &x) != 1)
         {
-            printf("Invalid input\n");
+            printf("Invalid include\n");
             return ERROR_NOT_FOUND;
         }
         if (x <= 0 || x > 100000)
         {
             printf("This is an incorrect number\n");
-            return INCORRECT_NUMBER;
+            return INCORRECT_ARGUMENTS;
         }
 
         if (push_back(&input, x) != OK)

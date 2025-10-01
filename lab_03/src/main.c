@@ -11,7 +11,7 @@ int main (int argc, char** argv)
     int rc = parse_input(argc, argv, nums, &flag);
     if (rc != OK)
     {
-        print_messanges(rc);
+        print_errors(rc);
         return 1;
     }
 
@@ -30,8 +30,8 @@ int main (int argc, char** argv)
 
     if (rc != OK)
     {
-        print_messanges(rc);
+        print_errors(rc);
         return 1;
-    }
+    } 
     return 0;
 }

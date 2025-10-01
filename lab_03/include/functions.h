@@ -10,4 +10,4 @@ int is_multiple(const int a, const int b);
 
 int is_triangular(const double eps, const double a, const double b, const double c);
 
-void print_messanges(const int err);
+void print_errors(const int err);
