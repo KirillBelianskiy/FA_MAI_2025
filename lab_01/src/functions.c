@@ -192,7 +192,7 @@ void print_errors(const int error_code)
     switch (error_code) {
     case OK: break;
     case NEGATIVE_NUMBER: printf("Negative number"); break;
-    case INCORRECT_NUMBER: printf("Large number"); break;
+    case INCORRECT_NUMBER: printf("Incorrect number"); break;
     case INCORRECT_ARGUMENTS: printf("Incorrect number"); break;
     default: printf("Unknown status"); break;
     }
