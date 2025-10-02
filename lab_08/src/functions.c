@@ -25,6 +25,11 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
         return INCORRECT_ARGUMENTS;
     }
 
+    if (argc < 3)
+    {
+        return INCORRECT_COUNT_INPUT;
+    }
+
     char* endptr;
     long val = strtol(argv[1], &endptr, 10);
 
@@ -35,7 +40,12 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
 
     if (val < INT_MIN || val > INT_MAX)
     {
-        return LARGE_NUMBER;
+        return INCORRECT_NUMBER;
+    }
+
+    if (val < 2 || val > 36)
+    {
+        return INCORRECT_BASE;
     }
 
     *base = (int)val;
@@ -54,14 +64,11 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
             return INCORRECT_ARGUMENTS;
         }
 
-        if (val < INT_MIN || val > INT_MAX)
+        if (val < 0 || val > INT_MAX)
         {
-            return LARGE_NUMBER;
+            return INCORRECT_NUMBER;
         }
-        if (argc - 2 < MAX_COUNT_INPUT)
-        {
-            nums[i-2] = (int)val;
-        }
+        nums[i-2] = (int)val;
     }
     return OK;
 }
@@ -77,7 +84,7 @@ int from10toN(int num, const int n, char* output)
         return OK;
     }
 
-    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 
     char temp[33];
     int i = 0;
@@ -104,10 +111,10 @@ void print_errors(const int err)
     switch (err)
     {
         case OK: break;
-        case INCORRECT_ARGUMENTS: printf("Incorrect arguments"); break;
-        case INCORRECT_BASE: printf("Incorrect base"); break;
-        case LARGE_NUMBER: printf("Large number"); break;
-        case INCORRECT_COUNT_INPUT: printf("Incorrect count of arguments"); break;
-        default: printf("Unknown status"); break;
+        case INCORRECT_ARGUMENTS: printf("Incorrect arguments\n"); break;
+        case INCORRECT_BASE: printf("Incorrect base\n"); break;
+        case INCORRECT_NUMBER: printf("Incorrect number\n"); break;
+        case INCORRECT_COUNT_INPUT: printf("Incorrect count of arguments\n"); break;
+        default: printf("Unknown status\n"); break;
     }
 }

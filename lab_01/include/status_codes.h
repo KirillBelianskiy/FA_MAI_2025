@@ -4,7 +4,7 @@ enum status_codes
 {
     OK,
     NEGATIVE_NUMBER,
-    LARGE_NUMBER,
+    INCORRECT_NUMBER,
     INCORRECT_ARGUMENTS,
     INCORRECT_COUNT_INPUT,
 };

@@ -15,7 +15,7 @@ int find_natural_numbers(const int x)
     }
     if (x > 100)
     {
-        return LARGE_NUMBER;
+        return INCORRECT_NUMBER;
     }
 
     int count = 0;
@@ -137,7 +137,7 @@ int factorial(const int x)
 
     if (x > 12)
     {
-        return LARGE_NUMBER;
+        return INCORRECT_NUMBER;
     }
 
     int a = _factorial(x);
@@ -180,7 +180,7 @@ int GetOpts(const int argc, char* const* argv, kOpts *option, int *number) {
 
     if (val < INT_MIN || val > INT_MAX)
     {
-        return LARGE_NUMBER;
+        return INCORRECT_NUMBER;
     }
 
     *number = (int)val;
@@ -192,7 +192,7 @@ void print_errors(const int error_code)
     switch (error_code) {
     case OK: break;
     case NEGATIVE_NUMBER: printf("Negative number"); break;
-    case LARGE_NUMBER: printf("Large number"); break;
+    case INCORRECT_NUMBER: printf("Large number"); break;
     case INCORRECT_ARGUMENTS: printf("Incorrect number"); break;
     default: printf("Unknown status"); break;
     }

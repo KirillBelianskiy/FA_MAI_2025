@@ -7,5 +7,5 @@ enum status_codes
     SIZE_NOT_FOUND,
     ERROR_NOT_FOUND,
     INCORRECT_ARGUMENTS,
-    LARGE_NUMBER,
+    INCORRECT_NUMBER,
 };
