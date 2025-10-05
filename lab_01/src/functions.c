@@ -97,8 +97,8 @@ int table_of_degrees(const int x)
                 printf("%d ", i);
             else
             {
-                int num = (int)pow(i, j);
-                printf("%d ", num);
+                long long num = (long long)pow(i, j);
+                printf("%lld ", num);
             }
         }
         printf("\n");
