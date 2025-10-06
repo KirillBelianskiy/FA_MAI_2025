@@ -15,8 +15,8 @@ int main(int argc, char** argv) {
     callback_t handlers[] = {
         find_natural_numbers,
         is_prime,
+        to_hex,
         table_of_degrees,
-        sum_to_num,
         sum_to_num,
         factorial
     };
