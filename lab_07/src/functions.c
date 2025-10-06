@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <limits.h>
 
 #include "../include/status_codes.h"
 
@@ -21,88 +22,139 @@ int find_number_system(const char* num)
             base = num[i] > base ? num[i] : base;
         }
     }
+
+    int res_base;
     if (base >= 'a' && base <= 'z')
     {
-        return base - 'a' + 11;
+        res_base = base - 'a' + 11;
     }
-    return base - '0' + 1;
+    else
+    {
+        res_base = base - '0' + 1;
+    }
+
+    return res_base < 2 ? 2 : res_base;
 }
 
 int to_dec(const char* num, const int base)
 {
-    int res = 0;
-    int sign = 1;
+    // Accumulate with 32-bit wraparound semantics
+    unsigned int acc = 0U;
     int i = 0;
     if (num[0] == '-')
     {
-        sign = -1;
+        // According to problem statement, '-' is treated as a separator in input
+        // and should not appear here, but keep a defensive skip for completeness.
         i++;
     }
     for (; num[i] != '\0'; i++)
     {
         char ch = num[i];
-        int digit;
+        unsigned int digit;
 
-        if (isdigit(ch))
+        if (isdigit((unsigned char)ch))
         {
-            digit = ch - '0';
+            digit = (unsigned int)(ch - '0');
         }
-        else if (isalpha(ch))
+        else if (isalpha((unsigned char)ch))
         {
-            digit = tolower(ch) - 'a' + 10;
+            digit = (unsigned int)(tolower((unsigned char)ch) - 'a' + 10);
+        }
+        else
+        {
+            // Skip non-alphanumeric characters
+            continue;
         }
 
-        res = res * base + digit;
+        // By construction, base is minimal to include the max digit, so digit < base.
+        acc = acc * (unsigned int)base + digit; // natural 32-bit wraparound
     }
-    return res * sign;
+    return (int)acc;
 }
 
 int read_file(FILE* file, char buffer[][20])
 {
-    int i = 0, j = 0, reading = 0, insignificant_zeros = 0;
-    char ch;
-    while ((ch = fgetc(file)) != EOF && i < BUFFER_SIZE)
+    int token_index = 0;
+    int write_pos = 0;
+    int in_token = 0;
+    int has_nonzero = 0;
+    int ch;
+
+    while ((ch = fgetc(file)) != EOF && token_index < BUFFER_SIZE)
     {
         if (isalnum(ch))
         {
-            if (ch == '0' && !reading && j == 0)
+            if (!in_token)
             {
-                continue;
+                in_token = 1;
+                has_nonzero = 0;
+                write_pos = 0;
             }
-            if (j < STR_SIZE - 1)
+
+            // Check if character is non-zero or a letter
+            if (ch != '0' || isalpha(ch))
             {
-                buffer[i][j] = ch;
-                j++;
-                reading = 1;
-                insignificant_zeros = 0;
+                has_nonzero = 1;
+            }
+
+            // Store character if it's significant (non-leading zero)
+            if (has_nonzero || write_pos > 0)
+            {
+                if (write_pos < STR_SIZE - 1)
+                {
+                    buffer[token_index][write_pos++] = (char)ch;
+                }
+                else
+                {
+                    // token too long
+                    return -1;
+                }
+            }
+        }
+        else if (in_token)
+        {
+            // End of token reached
+            if (write_pos == 0 || !has_nonzero)
+            {
+                // Token consisted only of zeros -> store single '0'
+                buffer[token_index][0] = '0';
+                buffer[token_index][1] = '\0';
             }
             else
             {
-                return INCORRECT_COUNT_INPUT;
+                buffer[token_index][write_pos] = '\0';
             }
-        }
-        else if (reading)
-        {
-            buffer[i][j] = '\0';
-            i++;
-            j = 0;
-            reading = 0;
+            token_index++;
+            in_token = 0;
+            write_pos = 0;
+            has_nonzero = 0;
         }
     }
-    if (reading)
+
+    // Handle case where file ends with a token
+    if (in_token && token_index < BUFFER_SIZE)
     {
-        buffer[i][j] = '\0';
-        i++;
+        if (write_pos == 0 || !has_nonzero)
+        {
+            buffer[token_index][0] = '0';
+            buffer[token_index][1] = '\0';
+        }
+        else
+        {
+            buffer[token_index][write_pos] = '\0';
+        }
+        token_index++;
     }
-    return i;
+
+    return token_index;
 }
 
-int write_file(FILE* file, const char buffer[][20], const int* bases, const int* dec_numbers, const int size)
+int write_file(FILE* file, char buffer[][20], int* bases, int* dec_numbers, int size)
 {
-    if (size <= 0) return INCORRECT_ARGUMENTS;
+    if (size <= 0) return OK;
     for (int i = 0; i < size; i++)
     {
-       fprintf(file, "%s %d %d\n", buffer[i], bases[i], dec_numbers[i]);
+        fprintf(file, "%s %d %d\n", buffer[i], bases[i], dec_numbers[i]);
     }
     return OK;
 }

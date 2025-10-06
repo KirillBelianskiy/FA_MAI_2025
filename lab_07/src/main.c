@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     char strs[1024][20];
     int count_nums = read_file(inp, strs);
-    if (count_nums == INCORRECT_COUNT_INPUT)
+    if (count_nums < 0)
     {
         printf("Incorrect count of numbers\n");
         return INCORRECT_COUNT_INPUT;
@@ -42,7 +42,10 @@ int main(int argc, char **argv)
         dec_nums[i] = dec_number;
     }
 
-    write_file(outp, strs, bases, dec_nums, count_nums);
+    if (write_file(outp, strs, bases, dec_nums, count_nums) != OK)
+    {
+        printf("Error writing to file\n");
+    }
 
     fclose(inp);
     fclose(outp);

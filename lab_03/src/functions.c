@@ -58,35 +58,35 @@ int parse_input(const int argc, const char** argv, double* nums, char* f)
     char flag = argv[1][1];
     *f = flag;
 
-    if (flag == 'q' || flag == 't') {
+    if (flag == 'q' || flag == 't')
+    {
         if (argc != 6) return INCORRECT_COUNT_INPUT;
-    } else if (flag == 'm') {
+    }
+    else if (flag == 'm')
+    {
         if (argc != 4) return INCORRECT_COUNT_INPUT;
-    } else {
+    }
+    else
+    {
         return INCORRECT_INPUT;
     }
 
     for (int i = 2; i < argc; i++)
     {
-        char *endptr;
+        char* endptr;
         double value = strtod(argv[i], &endptr);
 
         if (*endptr != '\0' || argv[i] == endptr)
         {
-            return 1;
+            return INCORRECT_ARGUMENTS;
         }
 
         if (value == HUGE_VAL || value == -HUGE_VAL)
         {
-            return 1;
+            return INCORRECT_ARGUMENTS;
         }
 
-        if (eq(10e-10, value, 0.0) || less(10e-10, value, 0.0))
-        {
-            return 1;
-        }
-
-        nums[i-2] = value;
+        nums[i - 2] = value;
     }
     return OK;
 }
@@ -106,7 +106,7 @@ int find_solutions(const double eps, const double a, const double b, const doubl
             }
             return ZERO_SOL;
         }
-        sol[0] = - c / b;
+        sol[0] = -c / b;
         *count = 1;
         return OK;
     }
@@ -114,7 +114,7 @@ int find_solutions(const double eps, const double a, const double b, const doubl
     double D = b * b - 4 * a * c;
     if (eq(eps, D, 0))
     {
-        sol[0] = - b / (2 * a);
+        sol[0] = -b / (2 * a);
         *count = 1;
         return OK;
     }
@@ -156,26 +156,27 @@ int possible_solutions(const double eps, const double a, const double b, const d
                 }
 
 
-                int root_count = find_solutions(eps, coefficients[i], coefficients[j], coefficients[k], solutions, &count);
+                int root_count = find_solutions(eps, coefficients[i], coefficients[j], coefficients[k], solutions,
+                                                &count);
                 if (root_count == ZERO_SOL)
                 {
-                    printf("Zero solution for this coefficients: %.02lf, %.02lf, %.02lf\n",
-                        coefficients[i], coefficients[j], coefficients[k]);
+                    printf("Zero solution for these coefficients: %.02lf, %.02lf, %.02lf\n",
+                           coefficients[i], coefficients[j], coefficients[k]);
                 }
                 else if (root_count == INFINITY_SOL)
                 {
-                    printf("Infinity solutions for this coefficients: %.02lf, %.02lf, %.02lf\n",
-                        coefficients[i], coefficients[j], coefficients[k]);
+                    printf("Infinity solutions for these coefficients: %.02lf, %.02lf, %.02lf\n",
+                           coefficients[i], coefficients[j], coefficients[k]);
                 }
                 else if (count == 1)
                 {
-                    printf("%.02lf is solution for this coefficients: %.02lf, %.02lf, %.02lf\n",
-                        solutions[0], coefficients[i], coefficients[j], coefficients[k]);
+                    printf("%.02lf is solution for these coefficients: %.02lf, %.02lf, %.02lf\n",
+                           solutions[0], coefficients[i], coefficients[j], coefficients[k]);
                 }
                 else if (count == 2)
                 {
-                    printf("%.02lf and %.02lf are solutions for this coefficients: %.02lf, %.02lf, %.02lf\n",
-                        solutions[0], solutions[1], coefficients[i], coefficients[j], coefficients[k]);
+                    printf("%.02lf and %.02lf are solutions for these coefficients: %.02lf, %.02lf, %.02lf\n",
+                           solutions[0], solutions[1], coefficients[i], coefficients[j], coefficients[k]);
                 }
             }
         }
@@ -245,14 +246,28 @@ void print_errors(const int err)
     switch (err)
     {
     case OK: return;
-    case NEGATIVE_NUMBER: printf("The provided epsilon value is negative, which is invalid for comparison purposes.\n"); break;
-    case INCORRECT_INPUT: printf("The input provided is incorrect or malformed, please check the format and try again.\n"); break;
-    case INCORRECT_COUNT_INPUT: printf("The number of arguments passed is incorrect; please verify the required count and provide the appropriate inputs.\n"); break;
-    case ZERO_SOL: printf("The equation has zero real solutions, meaning no roots satisfy the conditions.\n"); break;
-    case INFINITY_SOL: printf("The equation has infinitely many solutions, as it simplifies to an identity like 0 = 0.\n"); break;
-    case INCORRECT_ARGUMENTS: printf("The arguments provided are incorrect or invalid for the operation being performed.\n"); break;
-    case MULTIPLE: printf("The first number is a multiple of the second number.\n"); break;
-    case NOT_MULTIPLE: printf("The first number is not a multiple of the second number.\n"); break;
-    default: printf("An unknown error code was encountered; please check the input or contact support for assistance.\n"); break;
+    case NEGATIVE_NUMBER: printf("The provided epsilon value is negative, which is invalid for comparison purposes.\n");
+        break;
+    case INCORRECT_INPUT: printf(
+            "The input provided is incorrect or malformed, please check the format and try again.\n");
+        break;
+    case INCORRECT_COUNT_INPUT: printf(
+            "The number of arguments passed is incorrect; please verify the required count and provide the appropriate inputs.\n");
+        break;
+    case ZERO_SOL: printf("The equation has zero real solutions, meaning no roots satisfy the conditions.\n");
+        break;
+    case INFINITY_SOL: printf(
+            "The equation has infinitely many solutions, as it simplifies to an identity like 0 = 0.\n");
+        break;
+    case INCORRECT_ARGUMENTS: printf(
+            "The arguments provided are incorrect or invalid for the operation being performed.\n");
+        break;
+    case MULTIPLE: printf("The first number is a multiple of the second number.\n");
+        break;
+    case NOT_MULTIPLE: printf("The first number is not a multiple of the second number.\n");
+        break;
+    default: printf(
+            "An unknown error code was encountered; please check the input or contact support for assistance.\n");
+        break;
     }
 }

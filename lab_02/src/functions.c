@@ -76,7 +76,7 @@ int free_d_array(d_array* d_array)
     return OK;
 }
 
-int _sieve(const unsigned n, const d_array* primes)
+int _sieve(unsigned n, d_array* primes)
 {
     if (primes == NULL || n < 2) return ERROR_NOT_FOUND;
 

@@ -6,14 +6,25 @@
 #include "../include/functions.h"
 #include "../include/status_codes.h"
 
-int max(const int* nums, const int size)
+int abs_max(const int* nums, const int size, int* sign)
 {
     if (nums == NULL || size == 0) return INCORRECT_ARGUMENTS;
 
-    int max = nums[0];
+    int max = INT_MIN;
     for (int i = 0; i < size; i++)
     {
-        max = nums[i] > max ? nums[i] : max;
+        if (max < abs(nums[i]))
+        {
+            max = abs(nums[i]);
+            if (nums[i] < 0)
+            {
+                *sign = 1;
+            }
+            else
+            {
+                *sign = 0;
+            }
+        }
     }
     return max;
 }
@@ -25,7 +36,7 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
         return INCORRECT_ARGUMENTS;
     }
 
-    if (argc < 3)
+    if (argc < 4)
     {
         return INCORRECT_COUNT_INPUT;
     }
@@ -50,7 +61,7 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
 
     *base = (int)val;
 
-    if (argc - 3 > MAX_COUNT_INPUT)
+    if (argc - 3 < 1 || argc - 3 > MAX_COUNT_INPUT)
     {
         return INCORRECT_COUNT_INPUT;
     }
@@ -64,7 +75,7 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
             return INCORRECT_ARGUMENTS;
         }
 
-        if (val < 0 || val > INT_MAX)
+        if (val < INT_MIN || val > INT_MAX)
         {
             return INCORRECT_NUMBER;
         }
@@ -73,7 +84,7 @@ int parse_input(const int argc, const char** argv, int *base, int* nums)
     return OK;
 }
 
-int from10toN(int num, const int n, char* output)
+int from10toN(int num, const int n, char* output, int sign)
 {
     if (n < 2 || n > 36) return INCORRECT_BASE;
 
@@ -84,7 +95,7 @@ int from10toN(int num, const int n, char* output)
         return OK;
     }
 
-    char digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     char temp[33];
     int i = 0;
@@ -96,6 +107,10 @@ int from10toN(int num, const int n, char* output)
     }
 
     int j = 0;
+    if (sign)
+    {
+        output[j++] = '-';
+    }
     while (i > 0)
     {
         output[j++] = temp[--i];
@@ -112,8 +127,8 @@ void print_errors(const int err)
     {
         case OK: break;
         case INCORRECT_ARGUMENTS: printf("Incorrect arguments\n"); break;
-        case INCORRECT_BASE: printf("Incorrect base\n"); break;
-        case INCORRECT_NUMBER: printf("Incorrect number\n"); break;
+        case INCORRECT_BASE: printf("Incorrect base (must be 2-36)\n"); break;
+        case INCORRECT_NUMBER: printf("Incorrect number (out of INT range or buffer size)\n"); break;
         case INCORRECT_COUNT_INPUT: printf("Incorrect count of arguments\n"); break;
         default: printf("Unknown status\n"); break;
     }

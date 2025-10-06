@@ -1,4 +1,4 @@
-#pragma ones
+#pragma once
 #include "../include/status_codes.h"
 
 typedef int (*callback_t)(int);

@@ -18,6 +18,6 @@ int main(int argc, char **argv)
     double int2 = calc_integral(eps, 0.0, 1.0, func_b);
     double int3 = calc_integral(eps, 0.0, 1.0, func_c);
     double int4 = calc_integral(eps, 0.0, 1.0, func_d);
-    printf("a: %lf\nb: %lf\nc: %lf\nd: %lf\n", int1, int2, int3, int4);
+    printf("a: %.15lf\nb: %.15lf\nc: %.15lf\nd: %.15lf\n", int1, int2, int3, int4);
     return 0;
 }

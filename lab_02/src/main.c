@@ -14,7 +14,7 @@ int main()
 
     if (n <= 0 || n > 100000)
     {
-        printf("Invalid include\n");
+        printf("Invalid input\n");
         return SIZE_NOT_FOUND;
     }
 

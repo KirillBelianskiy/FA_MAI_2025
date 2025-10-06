@@ -16,14 +16,16 @@ int main(int argc, char **argv)
     }
 
     int size = argc - 3;
-    int max_num = max(nums, size);
+
+    int sign = 0;
+    int max_num = abs_max(nums, size, &sign);
 
     char res[5][32];
     int bases[5] = {base, 9, 18, 27, 36};
 
     for (int i = 0; i < 5; i++)
     {
-        rc = from10toN(max_num, bases[i], res[i]);
+        rc = from10toN(max_num, bases[i], res[i], sign);
         if (rc != OK)
         {
             print_errors(rc);

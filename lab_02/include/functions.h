@@ -13,5 +13,5 @@ int push_back(d_array* d_array, const unsigned value);
 int free_d_array(d_array* d_array);
 unsigned max(const d_array* d_array);
 
-int _sieve(const unsigned n, const d_array* primes);
+int _sieve(unsigned n, d_array* primes);
 int sieve(const d_array* input);
