@@ -162,11 +162,13 @@ int possible_solutions(const double eps, const double a, const double b, const d
                 {
                     printf("Zero solution for these coefficients: %.02lf, %.02lf, %.02lf\n",
                            coefficients[i], coefficients[j], coefficients[k]);
+                    return OK;
                 }
                 else if (root_count == INFINITY_SOL)
                 {
                     printf("Infinity solutions for these coefficients: %.02lf, %.02lf, %.02lf\n",
                            coefficients[i], coefficients[j], coefficients[k]);
+                    return OK;
                 }
                 else if (count == 1)
                 {
@@ -248,26 +250,21 @@ void print_errors(const int err)
     case OK: return;
     case NEGATIVE_NUMBER: printf("The provided epsilon value is negative, which is invalid for comparison purposes.\n");
         break;
-    case INCORRECT_INPUT: printf(
-            "The input provided is incorrect or malformed, please check the format and try again.\n");
+    case INCORRECT_INPUT: printf("The input provided is incorrect or malformed, please check the format and try again.\n");
         break;
-    case INCORRECT_COUNT_INPUT: printf(
-            "The number of arguments passed is incorrect; please verify the required count and provide the appropriate inputs.\n");
+    case INCORRECT_COUNT_INPUT: printf("The number of arguments passed is incorrect; please verify the required count and provide the appropriate inputs.\n");
         break;
     case ZERO_SOL: printf("The equation has zero real solutions, meaning no roots satisfy the conditions.\n");
         break;
-    case INFINITY_SOL: printf(
-            "The equation has infinitely many solutions, as it simplifies to an identity like 0 = 0.\n");
+    case INFINITY_SOL: printf("The equation has infinitely many solutions, as it simplifies to an identity like 0 = 0.\n");
         break;
-    case INCORRECT_ARGUMENTS: printf(
-            "The arguments provided are incorrect or invalid for the operation being performed.\n");
+    case INCORRECT_ARGUMENTS: printf("The arguments provided are incorrect or invalid for the operation being performed.\n");
         break;
     case MULTIPLE: printf("The first number is a multiple of the second number.\n");
         break;
     case NOT_MULTIPLE: printf("The first number is not a multiple of the second number.\n");
         break;
-    default: printf(
-            "An unknown error code was encountered; please check the input or contact support for assistance.\n");
+    default: printf("An unknown error code was encountered; please check the input or contact support for assistance.\n");
         break;
     }
 }

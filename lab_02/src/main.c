@@ -8,7 +8,7 @@ int main()
     int n;
     if (scanf("%d", &n) == 0)
     {
-        printf("Error reading include\n");
+        printf("Error reading input\n");
         return INCORRECT_ARGUMENTS;
     }
 
@@ -30,7 +30,7 @@ int main()
     {
         if (scanf("%d", &x) != 1)
         {
-            printf("Invalid include\n");
+            printf("Invalid input\n");
             return ERROR_NOT_FOUND;
         }
         if (x <= 0 || x > 100000)

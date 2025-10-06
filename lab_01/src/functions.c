@@ -108,21 +108,22 @@ int table_of_degrees(const int x)
 
 int sum_to_num(const int x)
 {
-    if (x < 1)
+    if (x < 1 || x > INT_MAX)
     {
-        return NEGATIVE_NUMBER;
+        return INCORRECT_NUMBER;
     }
 
-    int sum = 0;
+    long long sum = 0;
     for (int i = 1; i <= x; i++)
     {
         sum += i;
     }
-    printf("%d", sum);
+    if (sum > LONG_LONG_MAX) return INCORRECT_NUMBER;
+    printf("%lld", sum);
     return OK;
 }
 
-static int _factorial(const int x)
+long long _factorial(const int x)
 {
     if (x == 0 || x == 1)  return 1;
     return x * _factorial(x - 1);
@@ -135,17 +136,17 @@ int factorial(const int x)
         return NEGATIVE_NUMBER;
     }
 
-    if (x > 12)
+    if (x > 16)
     {
         return INCORRECT_NUMBER;
     }
 
-    int a = _factorial(x);
+    long long a = _factorial(x);
     printf("%d", a);
     return OK;
 }
 
-int GetOpts(const int argc, char* const* argv, kOpts *option, int *number) {
+int GetOpts(const int argc, char** argv, kOpts *option, int *number) {
     if (argc != 3) {
         return INCORRECT_COUNT_INPUT;
     }

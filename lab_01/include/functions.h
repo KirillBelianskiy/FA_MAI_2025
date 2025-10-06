@@ -15,6 +15,6 @@ int sum_to_num(const int x);
 
 int factorial(const int x);
 
-int GetOpts(const int argc, char * const *argv, kOpts *option, int *number);
+int GetOpts(const int argc, char** argv, kOpts *option, int *number);
 
 void print_errors(const int error_code);

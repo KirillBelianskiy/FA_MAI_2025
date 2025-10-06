@@ -69,19 +69,20 @@ int change_to_ascii(FILE *inp, FILE *outp)
     }
     return OK;
 }
-int GetOpts(int argc, char **argv, kOpts *option, FILE *input, FILE *output)
+
+int GetOpts(int argc, char **argv, kOpts *option, FILE **input, FILE **output)
 {
     if (argc < 3 || argc > 4)
     {
         return INCORRECT_COUNT_INPUT;
     }
 
-    if (argv[1][0] != '-' && argv[1][0] != '/') return INCORRECT_INPUT;
+    if (argv[1][0] != '-' && argv[1][0] != '/')
+        return INCORRECT_INPUT;
 
-    input = fopen(argv[2], "r");
-    if (input == NULL)
+    *input = fopen(argv[2], "r");
+    if (*input == NULL)
     {
-        fclose(input);
         return ERROR_OPEN_FILE;
     }
 
@@ -90,29 +91,40 @@ int GetOpts(int argc, char **argv, kOpts *option, FILE *input, FILE *output)
 
     if (use_n_flag)
     {
+        if (argc != 4)
+        {
+            fclose(*input);
+            return INCORRECT_COUNT_INPUT;
+        }
         strncpy(output_filename, argv[3], 99);
+        output_filename[99] = '\0';
     }
     else
     {
+        if (argc != 3)
+        {
+            fclose(*input);
+            return INCORRECT_COUNT_INPUT;
+        }
         strcpy(output_filename, "out_");
         strncat(output_filename, argv[2], 95);
     }
 
     if (strcmp(argv[2], output_filename) == 0)
     {
-        fprintf(output_filename, "Error: Input and output files cannot be the same.\n");
-        fclose(output);
+        fprintf(stderr, "Error: Input and output files cannot be the same.\n");
+        fclose(*input);
         return INCORRECT_INPUT;
     }
 
-    output = fopen(output_filename, "w");
-    if (output == NULL)
+    *output = fopen(output_filename, "w");
+    if (*output == NULL)
     {
-        fclose(output);
+        fclose(*input);
         return ERROR_OPEN_FILE;
     }
 
-    kOpts action_flag = use_n_flag ? argv[1][2] : argv[1][1];
+    char action_flag = use_n_flag ? argv[1][2] : argv[1][1];
 
     switch (action_flag)
     {
@@ -121,13 +133,13 @@ int GetOpts(int argc, char **argv, kOpts *option, FILE *input, FILE *output)
     case 's': *option = OPT_S; break;
     case 'a': *option = OPT_A; break;
     default:
-        fclose(input);
-        fclose(output);
+        fclose(*input);
+        fclose(*output);
         return UNKNOWN_FLAG;
     }
     return OK;
-
 }
+
 void print_errors(int error_code)
 {
     switch (error_code)
@@ -137,6 +149,7 @@ void print_errors(int error_code)
         case ERROR_MEMORY_ALLOCATION: printf("Error: memory allocation failed\n"); break;
         case INCORRECT_COUNT_INPUT: printf("Error: incorrect arguments count\n"); break;
         case INCORRECT_INPUT: printf("Error: incorrect input\n"); break;
+        case UNKNOWN_FLAG: printf("Error: unknown flag\n"); break;
         default: printf("Error: unknown error\n"); break;
     }
 }
