@@ -33,7 +33,7 @@ double func_b(double x)
 
 double func_c(double x)
 {
-    if (eq(10e-10, x, 1)) return 0.99999999;
+    if (eq(ё10e-10, x, 1.0)) return 0.0;
 
     return log(1.0 / (1.0 - x));
 }
