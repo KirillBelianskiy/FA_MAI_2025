@@ -38,13 +38,10 @@ int find_number_system(const char* num)
 
 int to_dec(const char* num, const int base)
 {
-    // Accumulate with 32-bit wraparound semantics
     unsigned int acc = 0U;
     int i = 0;
     if (num[0] == '-')
     {
-        // According to problem statement, '-' is treated as a separator in input
-        // and should not appear here, but keep a defensive skip for completeness.
         i++;
     }
     for (; num[i] != '\0'; i++)
@@ -62,12 +59,10 @@ int to_dec(const char* num, const int base)
         }
         else
         {
-            // Skip non-alphanumeric characters
             continue;
         }
 
-        // By construction, base is minimal to include the max digit, so digit < base.
-        acc = acc * (unsigned int)base + digit; // natural 32-bit wraparound
+        acc = acc * (unsigned int)base + digit;
     }
     return (int)acc;
 }
@@ -91,13 +86,11 @@ int read_file(FILE* file, char buffer[][20])
                 write_pos = 0;
             }
 
-            // Check if character is non-zero or a letter
             if (ch != '0' || isalpha(ch))
             {
                 has_nonzero = 1;
             }
 
-            // Store character if it's significant (non-leading zero)
             if (has_nonzero || write_pos > 0)
             {
                 if (write_pos < STR_SIZE - 1)
@@ -106,17 +99,14 @@ int read_file(FILE* file, char buffer[][20])
                 }
                 else
                 {
-                    // token too long
                     return -1;
                 }
             }
         }
         else if (in_token)
         {
-            // End of token reached
             if (write_pos == 0 || !has_nonzero)
             {
-                // Token consisted only of zeros -> store single '0'
                 buffer[token_index][0] = '0';
                 buffer[token_index][1] = '\0';
             }
@@ -131,7 +121,6 @@ int read_file(FILE* file, char buffer[][20])
         }
     }
 
-    // Handle case where file ends with a token
     if (in_token && token_index < BUFFER_SIZE)
     {
         if (write_pos == 0 || !has_nonzero)
