@@ -1,0 +1,12 @@
+#pragma once
+
+enum status_codes
+{
+    OK,
+    INCORRECT_BASE,
+    LARGE_NUMBER,
+    NEGATIVE_NUMBER,
+    INCORRECT_FRACTION,
+    INCORRECT_NUMBER,
+    INCORRECT_CALCULATION,
+};
