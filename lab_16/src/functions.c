@@ -5,7 +5,7 @@ void print_status_error(StatusCode status)
 {
     switch (status)
     {
-    case SUCCESS:
+    case OK:
         printf("Operation completed successfully.\n");
         break;
     case ERROR_INVALID_ARGUMENT:
@@ -84,13 +84,13 @@ StatusCode handle_search_by_id(const StudentArray* arr)
 
     StudentArray result;
     StatusCode status = student_array_init(&result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     status = find_students_by_id(arr, id, &result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         student_array_free(&result);
         return status;
@@ -110,7 +110,7 @@ StatusCode handle_search_by_id(const StudentArray* arr)
     }
 
     student_array_free(&result);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode handle_search_by_surname(const StudentArray* arr)
@@ -126,13 +126,13 @@ StatusCode handle_search_by_surname(const StudentArray* arr)
 
     StudentArray result;
     StatusCode status = student_array_init(&result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     status = find_students_by_surname(arr, surname, &result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         student_array_free(&result);
         return status;
@@ -152,7 +152,7 @@ StatusCode handle_search_by_surname(const StudentArray* arr)
     }
 
     student_array_free(&result);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode handle_search_by_name(const StudentArray* arr)
@@ -168,13 +168,13 @@ StatusCode handle_search_by_name(const StudentArray* arr)
 
     StudentArray result;
     StatusCode status = student_array_init(&result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     status = find_students_by_name(arr, name, &result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         student_array_free(&result);
         return status;
@@ -194,7 +194,7 @@ StatusCode handle_search_by_name(const StudentArray* arr)
     }
 
     student_array_free(&result);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode handle_search_by_group(const StudentArray* arr)
@@ -210,13 +210,13 @@ StatusCode handle_search_by_group(const StudentArray* arr)
 
     StudentArray result;
     StatusCode status = student_array_init(&result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     status = find_students_by_group(arr, group, &result);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         student_array_free(&result);
         return status;
@@ -236,19 +236,19 @@ StatusCode handle_search_by_group(const StudentArray* arr)
     }
 
     student_array_free(&result);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode handle_sort(StudentArray* arr, ComparatorFunc comparator, const char* sort_type)
 {
     StatusCode status = sort_students(arr, comparator);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     printf("Students sorted by %s.\n", sort_type);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode handle_write_student_info(const StudentArray* arr, const char* trace_file)
@@ -263,7 +263,7 @@ StatusCode handle_write_student_info(const StudentArray* arr, const char* trace_
     while (getchar() != '\n');
 
     StatusCode status = write_student_info_by_id(arr, id, trace_file);
-    if (status == SUCCESS)
+    if (status == OK)
     {
         printf("Student info written to trace file.\n");
     }
@@ -274,7 +274,7 @@ StatusCode handle_write_student_info(const StudentArray* arr, const char* trace_
 StatusCode handle_write_above_average(const StudentArray* arr, const char* trace_file)
 {
     StatusCode status = write_above_average_students(arr, trace_file);
-    if (status == SUCCESS)
+    if (status == OK)
     {
         printf("Above average students written to trace file.\n");
     }

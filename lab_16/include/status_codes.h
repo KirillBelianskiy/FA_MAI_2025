@@ -1,7 +1,7 @@
 #pragma once
 
 typedef enum {
-    SUCCESS = 0,
+    OK,
     ERROR_INVALID_ARGUMENT,
     ERROR_MEMORY_ALLOCATION,
     ERROR_FILE_OPEN,

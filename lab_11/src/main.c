@@ -5,7 +5,7 @@
 
 int main()
 {
-    int vc = is_infinite_fraction(10, 1, 1.0 / 3.0);
+    int vc = is_infinite_fraction(10, 1, 2.0 / 5.0);
 
     print_errors(vc);
     return 0;

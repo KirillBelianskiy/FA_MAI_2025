@@ -16,14 +16,14 @@ int main(int argc, char* argv[])
 
     StudentArray students;
     StatusCode status = student_array_init(&students);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         print_status_error(status);
         return 1;
     }
 
     status = read_students_from_file(input_file, &students);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         print_status_error(status);
         student_array_free(&students);
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
         {
         case 1:
             status = handle_search_by_id(&students);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 
         case 2:
             status = handle_search_by_surname(&students);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 
         case 3:
             status = handle_search_by_name(&students);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
         case 4:
             status = handle_search_by_group(&students);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 
         case 5:
             status = handle_sort(&students, compare_by_id, "ID");
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
 
         case 6:
             status = handle_sort(&students, compare_by_surname, "Surname");
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 
         case 7:
             status = handle_sort(&students, compare_by_name, "Name");
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 
         case 8:
             status = handle_sort(&students, compare_by_group, "Group");
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
 
         case 9:
             status = handle_write_student_info(&students, trace_file);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }
@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
 
         case 10:
             status = handle_write_above_average(&students, trace_file);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 print_status_error(status);
             }

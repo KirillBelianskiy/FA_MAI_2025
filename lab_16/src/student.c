@@ -22,7 +22,7 @@ StatusCode student_array_init(StudentArray* arr)
 
     arr->count = 0;
     arr->capacity = INITIAL_CAPACITY;
-    return SUCCESS;
+    return OK;
 }
 
 void student_array_free(StudentArray* arr)
@@ -63,13 +63,13 @@ StatusCode student_array_add(StudentArray* arr, const Student* student)
     }
 
     StatusCode status = student_copy(&arr->students[arr->count], student);
-    if (status != SUCCESS)
-    {
-        return status;
-    }
+        if (status != OK)
+        {
+            return status;
+        }
 
-    arr->count++;
-    return SUCCESS;
+        arr->count++;
+        return OK;
 }
 
 StatusCode student_create(Student* student, unsigned int id, const char* name,
@@ -83,19 +83,19 @@ StatusCode student_create(Student* student, unsigned int id, const char* name,
     StatusCode status;
 
     status = validate_string_alpha(name);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     status = validate_string_alpha(surname);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
 
     status = validate_string_not_empty(group);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
@@ -136,7 +136,7 @@ StatusCode student_create(Student* student, unsigned int id, const char* name,
     }
     memcpy(student->grades, grades, GRADES_COUNT * sizeof(unsigned char));
 
-    return SUCCESS;
+        return OK;
 }
 
 void student_free(Student* student)
@@ -198,7 +198,7 @@ StatusCode validate_string_alpha(const char* str)
         }
     }
 
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode validate_string_not_empty(const char* str)
@@ -208,7 +208,7 @@ StatusCode validate_string_not_empty(const char* str)
         return ERROR_INVALID_DATA;
     }
 
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode read_students_from_file(const char* filepath, StudentArray* arr)
@@ -252,7 +252,7 @@ StatusCode read_students_from_file(const char* filepath, StudentArray* arr)
 
         Student student;
         StatusCode status = student_create(&student, id, name, surname, group, grades);
-        if (status != SUCCESS)
+        if (status != OK)
         {
             fclose(file);
             return status;
@@ -261,7 +261,7 @@ StatusCode read_students_from_file(const char* filepath, StudentArray* arr)
         status = student_array_add(arr, &student);
         student_free(&student);
 
-        if (status != SUCCESS)
+        if (status != OK)
         {
             fclose(file);
             return status;
@@ -269,7 +269,7 @@ StatusCode read_students_from_file(const char* filepath, StudentArray* arr)
     }
 
     fclose(file);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode find_students_by_id(const StudentArray* arr, unsigned int id, StudentArray* result)
@@ -284,14 +284,14 @@ StatusCode find_students_by_id(const StudentArray* arr, unsigned int id, Student
         if (arr->students[i].id == id)
         {
             StatusCode status = student_array_add(result, &arr->students[i]);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 return status;
             }
         }
     }
 
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode find_students_by_surname(const StudentArray* arr, const char* surname, StudentArray* result)
@@ -306,14 +306,14 @@ StatusCode find_students_by_surname(const StudentArray* arr, const char* surname
         if (strcmp(arr->students[i].surname, surname) == 0)
         {
             StatusCode status = student_array_add(result, &arr->students[i]);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 return status;
             }
         }
     }
 
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode find_students_by_name(const StudentArray* arr, const char* name, StudentArray* result)
@@ -328,14 +328,14 @@ StatusCode find_students_by_name(const StudentArray* arr, const char* name, Stud
         if (strcmp(arr->students[i].name, name) == 0)
         {
             StatusCode status = student_array_add(result, &arr->students[i]);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 return status;
             }
         }
     }
 
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode find_students_by_group(const StudentArray* arr, const char* group, StudentArray* result)
@@ -350,14 +350,14 @@ StatusCode find_students_by_group(const StudentArray* arr, const char* group, St
         if (strcmp(arr->students[i].group, group) == 0)
         {
             StatusCode status = student_array_add(result, &arr->students[i]);
-            if (status != SUCCESS)
+            if (status != OK)
             {
                 return status;
             }
         }
     }
 
-    return SUCCESS;
+    return OK;
 }
 
 int compare_by_id(const void* a, const void* b)
@@ -407,7 +407,7 @@ StatusCode sort_students(StudentArray* arr, ComparatorFunc comparator)
     }
 
     qsort(arr->students, arr->count, sizeof(Student), comparator);
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode write_student_info_by_id(const StudentArray* arr, unsigned int id, const char* filepath)
@@ -451,7 +451,7 @@ StatusCode write_student_info_by_id(const StudentArray* arr, unsigned int id, co
         return ERROR_NOT_FOUND;
     }
 
-    return SUCCESS;
+        return OK;
 }
 
 StatusCode calculate_overall_average(const StudentArray* arr, double* average)
@@ -473,7 +473,7 @@ StatusCode calculate_overall_average(const StudentArray* arr, double* average)
     }
 
     *average = sum / arr->count;
-    return SUCCESS;
+    return OK;
 }
 
 StatusCode write_above_average_students(const StudentArray* arr, const char* filepath)
@@ -485,7 +485,7 @@ StatusCode write_above_average_students(const StudentArray* arr, const char* fil
 
     double overall_average;
     StatusCode status = calculate_overall_average(arr, &overall_average);
-    if (status != SUCCESS)
+    if (status != OK)
     {
         return status;
     }
@@ -526,5 +526,5 @@ StatusCode write_above_average_students(const StudentArray* arr, const char* fil
     }
 
     fclose(file);
-    return SUCCESS;
+        return OK;
 }
