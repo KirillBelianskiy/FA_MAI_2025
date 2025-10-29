@@ -98,7 +98,7 @@ int main()
     const char* ncpy_src2 = "A very long string";
     printf("Copying \"A very long...\" (n=10)...\n");
     strncpy(ncpy_dest, ncpy_src2, 10);
-    ncpy_dest[10] = '\0'; // Your function doesn't add \0 if n < src_len
+    ncpy_dest[10] = '\0'; // Your function.c doesn't add \0 if n < src_len
     printf("Result (truncated): \"%s\"\n", ncpy_dest);
     printf("\n");
 
