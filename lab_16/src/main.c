@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "../include/student.h"
-#include "../include/functions.h"
+#include "../include/UI.h"
 
 int main(int argc, char* argv[])
 {

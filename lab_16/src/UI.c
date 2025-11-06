@@ -1,4 +1,4 @@
-#include "../include/functions.h"
+#include "../include/UI.h"
 #include <stdio.h>
 
 void print_status_error(StatusCode status)
