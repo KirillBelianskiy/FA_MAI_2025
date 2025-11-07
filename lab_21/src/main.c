@@ -4,13 +4,19 @@
 
 int main()
 {
-    char res[65];
-    unsigned num = 52;
-    int vc = convert_base(num, 5, res);
-    if (vc == -1)
+    int num = 566;
+
+    for (int i = 1; i < 6; ++i)
     {
-        return -1;
+        char res[33];
+        int ok = convert_base(num, i, res);
+
+        if (ok == -1)
+        {
+            return -1;
+        }
+
+        printf("%s\n", res);
     }
-    printf("%s", res);
     return 0;
 }
