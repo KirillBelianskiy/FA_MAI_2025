@@ -13,6 +13,10 @@ int formatting(FILE* inp_file, FILE* outp_file)
 
         if (strlen(line_buffer) < 80)
         {
+            if (strlen(line_buffer) == 0)
+            {
+                continue;
+            }
             fprintf(outp_file, "%s\n", line_buffer);
             continue;
         }
