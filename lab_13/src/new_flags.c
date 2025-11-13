@@ -44,10 +44,6 @@ int to_zeckendorf(unsigned num, char* res)
 
     while (nums_of_fib[count - 1] <= num && count < 48)
     {
-        if (nums_of_fib[count - 1] > UINT_MAX - nums_of_fib[count - 2])
-        {
-            break;
-        }
         nums_of_fib[count] = nums_of_fib[count - 1] + nums_of_fib[count - 2];
 
         if (nums_of_fib[count] < nums_of_fib[count - 1])
@@ -69,9 +65,20 @@ int to_zeckendorf(unsigned num, char* res)
         i--;
     }
 
-    int j;
+    int j = 0;
 
-    for (j = 0; j <= count - 2; j++)
+    // for (j = 0; j <= count - 2; j++)
+    // {
+    //     if (zeck_bits[j])
+    //     {
+    //         res[j] = '1';
+    //     }
+    //     else
+    //     {
+    //         res[j] = '0';
+    //     }
+
+    while (j <= count -2)
     {
         if (zeck_bits[j])
         {
@@ -81,7 +88,9 @@ int to_zeckendorf(unsigned num, char* res)
         {
             res[j] = '0';
         }
+        j++;
     }
+
 
     res[j] = '1';
     res[j + 1] = '\0';
@@ -157,7 +166,7 @@ int memory_dump_helper(char* buffer, const void* data, size_t size)
 
     for (size_t i = 0; i < size; i++)
     {
-        unsigned char current_byte = bytes[size - i - 1];
+        unsigned char current_byte = bytes[size - i - 1]; // little-endian
 
         for (int j = 7; j >= 0; j--)
         {
@@ -168,7 +177,7 @@ int memory_dump_helper(char* buffer, const void* data, size_t size)
         {
             buffer[written_count++] = ' ';
         }
-    }
+    } // 1234 -≥ 4321
 
     buffer[written_count] = '\0';
     return written_count;

@@ -11,13 +11,8 @@ int formatting(FILE* inp_file, FILE* outp_file)
     {
         line_buffer[strcspn(line_buffer, "\n")] = 0;
 
-        if (strlen(line_buffer) < 80)
+        if (strlen(line_buffer) == 0)
         {
-            if (strlen(line_buffer) == 0)
-            {
-                continue;
-            }
-            fprintf(outp_file, "%s\n", line_buffer);
             continue;
         }
 
@@ -31,7 +26,6 @@ int formatting(FILE* inp_file, FILE* outp_file)
         {
             int len_new_word = strlen(word);
             if (len_new_word > 80) return -1;
-
 
             if (len_res_str + len_new_word + word_count <= 80)
             {
@@ -55,8 +49,7 @@ int formatting(FILE* inp_file, FILE* outp_file)
                     int base_spaces = total_spaces / num_gaps;
                     int extra_spaces = total_spaces % num_gaps;
 
-                    int i = 0;
-                    while (i < word_count)
+                    for (int i = 0; i < word_count; i++)
                     {
                         fprintf(outp_file, "%s", line_words[i]);
                         free(line_words[i]);
@@ -73,13 +66,10 @@ int formatting(FILE* inp_file, FILE* outp_file)
                                 extra_spaces--;
                             }
                         }
-                        else
-                        {
-                            fprintf(outp_file, "\n");
-                        }
-                        i++;
                     }
+                    fprintf(outp_file, "\n");
                 }
+
                 word_count = 1;
                 len_res_str = len_new_word;
                 line_words[0] = malloc(len_new_word + 1);
@@ -89,17 +79,39 @@ int formatting(FILE* inp_file, FILE* outp_file)
             word = strtok(NULL, " \t");
         }
 
-        for (int i = 0; i < word_count; i++)
+        if (word_count == 1)
         {
-            fprintf(outp_file, "%s", line_words[i]);
-            free(line_words[i]);
-
-            if (i < word_count - 1)
-            {
-                fputc(' ', outp_file);
-            }
+            fprintf(outp_file, "%s\n", line_words[0]);
+            free(line_words[0]);
         }
-        fputc('\n', outp_file);
+        else if (word_count > 1)
+        {
+            int num_gaps = word_count - 1;
+            int total_spaces = 80 - len_res_str;
+
+            int base_spaces = total_spaces / num_gaps;
+            int extra_spaces = total_spaces % num_gaps;
+
+            for (int i = 0; i < word_count; i++)
+            {
+                fprintf(outp_file, "%s", line_words[i]);
+                free(line_words[i]);
+
+                if (i < word_count - 1)
+                {
+                    for (int j = 0; j < base_spaces; j++)
+                    {
+                        fputc(' ', outp_file);
+                    }
+                    if (extra_spaces > 0)
+                    {
+                        fputc(' ', outp_file);
+                        extra_spaces--;
+                    }
+                }
+            }
+            fprintf(outp_file, "\n");
+        }
     }
 
     return 0;

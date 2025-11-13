@@ -39,7 +39,7 @@ void print_vector(Vector* v)
 
 int main()
 {
-    Vector v_str = create_vector(5, my_string_copy, my_string_delete, my_string_compare);
+    Vector v_str = create_vector(0, my_string_copy, my_string_delete, my_string_compare);
 
     push_back_vector(&v_str, "First");
     push_back_vector(&v_str, "Second");
@@ -58,10 +58,8 @@ int main()
     printf("Are vectors equal? ");
     is_equal_vector(&v_str, &v_str2) ? printf("Yes\n\n") : printf("No\n\n");
 
-
-
-
     print_vector(&v_str);
     delete_vector(&v_str);
+    delete_vector(&v_str2);
     return 0;
 }

@@ -108,7 +108,7 @@ int oversscanf(const char* str, const char* format, ...)
                     {
                         zeckendorf[i++] = *str++;
                     }
-                    zeckendorf[i] = '\0';
+                    zeckendorf[i] = 0;
 
                     if (i == 0)
                     {
