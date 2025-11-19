@@ -22,6 +22,7 @@ add_subdirectory(lab_16)
 
 add_subdirectory(lab_21)
 add_subdirectory(lab_22)
+add_subdirectory(lab_24)
 add_subdirectory(lab_26)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Wpedantic -fsanitize=address -g -01")
